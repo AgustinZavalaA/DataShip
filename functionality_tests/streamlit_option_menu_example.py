@@ -6,7 +6,7 @@ with st.sidebar:
         "Main Menu",
         ["Home", "Settings"],
         icons=["house", "gear"],
-        menu_icon="cast",
+        menu_icon="bar-chart-steps",
         default_index=1,
     )
     selected
