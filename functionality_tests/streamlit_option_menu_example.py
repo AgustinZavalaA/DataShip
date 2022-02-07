@@ -9,7 +9,7 @@ with st.sidebar:
         menu_icon="bar-chart-steps",
         default_index=1,
     )
-    selected
+    st.write(selected)
 
 # horizontal menu
 selected2 = option_menu(
@@ -20,4 +20,4 @@ selected2 = option_menu(
     default_index=0,
     orientation="horizontal",
 )
-selected2
+st.write(selected2)
