@@ -25,7 +25,8 @@ def main():
 
     for user in zip(names, usernames, passwords):
         cur.execute(
-            "INSERT INTO users (name, username, password) VALUES (?, ?, ?)", (user[0], user[1], hash_password(user[2]))
+            "INSERT INTO users (name, username, password) VALUES (?, ?, ?)",
+            (user[0], user[1], hash_password(user[2])),
         )
 
     # commit changes
@@ -38,12 +39,23 @@ def main():
     # show users with a password
     p = "123"
     print(f"Users with password {p}")
-    for row in cur.execute("SELECT * FROM users WHERE password = ?", (hash_password(p),)):
+    for row in cur.execute(
+        "SELECT * FROM users WHERE password = ?", (hash_password(p),)
+    ):
         print(row)
 
     # close connection
     con.close()
 
 
+def show_db():
+    conn = sqlite3.connect("dataship.db")
+    cur = conn.cursor()
+    for row in cur.execute("SELECT * FROM users"):
+        print(row)
+    conn.close()
+
+
 if __name__ == "__main__":
-    main()
+    # main()
+    show_db()

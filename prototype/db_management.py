@@ -34,6 +34,20 @@ class db_management:
 
         return False
 
+    def create_user(self, con: Connection, username, password, name):
+        cur = con.cursor()
+
+        cur.execute(
+            "INSERT INTO users (username, password, name) VALUES (?, ?, ?)",
+            (username, hash_password(password), name),
+        )
+        con.commit()
+        return {
+            "id": cur.lastrowid,
+            "name": name,
+            "username": username,
+        }
+
     @st.cache(hash_funcs={Connection: id})
     def get_connection(self):
         """Put the connection in cache to reuse if path does not change between Streamlit reruns.
