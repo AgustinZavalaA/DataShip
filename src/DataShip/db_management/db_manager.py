@@ -3,6 +3,8 @@ from sqlite3 import Connection
 import streamlit as st
 import hashlib
 
+from db_models import User
+
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
