@@ -46,7 +46,7 @@ pip install -r requirements.txt
 ```
 3.1. If you don't have a database, you can create one with the following command:
 ``` bash
-python src/db_management/create_db.py -cps
+python src/DataShip/db_management/db_manager.py -cps
 ```
 where the parameters are:
 - `-c`: create the database
