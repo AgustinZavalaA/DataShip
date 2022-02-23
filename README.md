@@ -9,19 +9,21 @@
 The final project structure should look something like this:
 ```mermaid
 graph LR;
-DataShip --> demo_data
+DataShip_ --> demo_data
 
-DataShip --> docs
+DataShip_ --> docs
 
-DataShip --> src
-src --> db_management
-src --> main.py
-src --> data_analysis_modules
-src --> views
+DataShip_ --> src
+src --> DataShip
+DataShip --> db_management
+DataShip --> main.py
+DataShip --> data_analysis_modules
+DataShip --> views
 
-DataShip--> tests
+DataShip_ --> tests
 tests --> db_tests
 tests --> data_analysis_modules_tests
+tests --> views_tests
 
 style main.py color:green;
 ```
@@ -42,11 +44,20 @@ cd DataShip
 ``` bash
 pip install -r requirements.txt
 ```
-4. Run the following command to run the DataShip application:
+3.1. If you don't have a database, you can create one with the following command:
 ``` bash
-python -m streamlit run src/main.py
+python src/db_management/create_db.py -cps
+```
+where the parameters are:
+- `-c`: create the database
+- `-p`: populate the database with demo data
+- `-s`: show the database
+   
+1. Run the following command to run the DataShip application:
+``` bash
+python -m streamlit run src/DataShip/main.py
 ```
 or if you want to run the application in debug mode:
 ``` bash
-python -m streamlit run src/main.py --debug
+python -m streamlit run src/DataShip/main.py --debug
 ```
