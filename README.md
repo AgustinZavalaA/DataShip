@@ -7,6 +7,10 @@
   
 # Data Flow Diagram
 Data inside DataShip follow the next diagram, if you expierence something not showed here open an issue in the [github repository](https://github.com/AgustinZavalaA/DataShip) 
+
+<style>
+    .mermaid svg { height: auto; }
+</style>
 ```mermaid
 graph TD
     Start[Start] -->|Click Home .Default.| uf(User upload file)
