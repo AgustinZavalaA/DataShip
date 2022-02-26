@@ -120,7 +120,7 @@ mkdir venv
 python3 -m venv venv/ds_venv
 ```
 If you are using Windows, you can use the following command:
-```ps
+```pwsh
 venv/ds_venv/Scripts/activate
 ```
 If you are using a POSIX system (Linux, MACOS), you can use the following command:
