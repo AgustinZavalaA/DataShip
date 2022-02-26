@@ -114,11 +114,24 @@ git clone https://github.com/AgustinZavalaA/DataShip.git
 ``` bash
 cd DataShip
 ```
-3. Run the following command to install all the dependencies:
-``` bash
-pip install -r requirements.txt
+3. Create a virtual environment and activate it:
+```bash
+mkdir venv
+python3 -m venv venv/ds_venv
 ```
-3.1. If you don't have a database, you can create one with the following command:
+If you are using Windows, you can use the following command:
+```ps
+venv/ds_venv/Scripts/activate
+```
+If you are using a POSIX system (Linux, MACOS), you can use the following command:
+```bash
+source venv/ds_venv/bin/activate
+```
+4. Run the following command to install DataShip as a package and install all the dependencies:
+``` bash
+pip install -e .
+```
+5. If you don't have a database, you can create one with the following command:
 ``` bash
 python src/DataShip/db_management/db_manager.py -cps
 ```
@@ -127,7 +140,7 @@ where the parameters are:
 - `-p`: populate the database with demo data
 - `-s`: show the database
    
-1. Run the following command to run the DataShip application:
+6. Run the following command to run the DataShip application:
 ``` bash
 python -m streamlit run src/DataShip/main.py
 ```
