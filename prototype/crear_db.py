@@ -39,7 +39,9 @@ def main():
     # show users with a password
     p = "123"
     print(f"Users with password {p}")
-    for row in cur.execute("SELECT * FROM users WHERE password = ?", (hash_password(p),)):
+    for row in cur.execute(
+        "SELECT * FROM users WHERE password = ?", (hash_password(p),)
+    ):
         print(row)
 
     # close connection
@@ -55,5 +57,5 @@ def show_db():
 
 
 if __name__ == "__main__":
-    # main()
+    main()
     show_db()
