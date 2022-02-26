@@ -51,7 +51,8 @@ CREATE TABLE Feedback_post (
 );
 CREATE TABLE Feedback_type (
     id INTEGER PRIMARY KEY AUTOINCREMENT ,
-    name STRING NOT NULL UNIQUE
+    name STRING NOT NULL UNIQUE,
+    created_at DATE NOT NULL
 );
 -- ALTER TABLE Users_files ADD CONSTRAINTEGER Users_files_fk0 FOREIGN KEY (user_id) REFERENCES Users(id);
 -- ALTER TABLE Users_modules ADD CONSTRAINTEGER Users_modules_fk0 FOREIGN KEY (user_id) REFERENCES Users(id);

@@ -3,7 +3,7 @@ from sqlite3 import Connection
 import streamlit as st
 import hashlib
 
-from db_models import User
+from DataShip.db_management.db_models import User
 
 
 def hash_password(password):
@@ -19,9 +19,9 @@ class DB_manager:
         cur.execute("SELECT * FROM users")
         return cur.fetchall()
 
-    def check_user_password(self, con: Connection, username_or_emal: str, password: str):
+    def check_user_password(self, con: Connection, username_or_emal: str, password: str) ->  User:
         cur = con.cursor()
-        if username_or_emal.find("@"):
+        if username_or_emal.find("@") != -1:
             cur.execute("SELECT * FROM users WHERE email = ?", (username_or_emal,))
         else:
             cur.execute("SELECT * FROM users WHERE username = ?", (username_or_emal,))
@@ -29,30 +29,30 @@ class DB_manager:
         if user is None:
             return False
 
-        hashed_password = user[3]
+        hashed_password = user[4]
         if hash_password(password) == hashed_password:
-            return {
-                "id": user[0],
-                "name": user[1],
-                "username": user[2],
-            }
+            return User(
+                id=user[0],
+                name=user[1],
+                username=user[2],
+                email=user[3],
+                password=user[4],
+                color_scheme=user[5],
+                created_at=user[6],
+            )
 
         return False
 
-    # TODO actualizar este metodo
-    def create_user(self, con: Connection, username, password, name):
+    def create_user(self, con: Connection, user: User) -> bool:
         cur = con.cursor()
 
+        user.password = hash_password(user.password)
         cur.execute(
-            "INSERT INTO users (username, password, name) VALUES (?, ?, ?)",
-            (username, hash_password(password), name),
+            "INSERT INTO users (name, username, email, password, color_scheme, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+            (user.name, user.username, user.email, user.password, user.color_scheme, user.created_at),
         )
         con.commit()
-        return {
-            "id": cur.lastrowid,
-            "name": name,
-            "username": username,
-        }
+        return True
 
     @st.cache(hash_funcs={Connection: id})
     def get_connection(self) -> Connection:
@@ -92,10 +92,30 @@ def main():
 
 
 def show_db():
+    """ Prints all data in database including all table names, column names and data."""
     conn = sqlite3.connect("dataship.db")
     cur = conn.cursor()
-    for row in cur.execute("SELECT * FROM users"):
-        print(row)
+    
+    # Get all table names
+    tables = cur.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;").fetchall()
+    tables.remove(("sqlite_sequence",))
+    
+    # Iterate over all tables
+    print("PRINTING ALL TABLES")
+    for table_name in tables:
+        # print table name and column names
+        print(f"NAME : {table_name[0]}")
+        print("COLUMNS :", end="")
+        for col in cur.execute(f"PRAGMA table_info({table_name[0]})").fetchall():
+            print(f" {col[1]}", end="")
+        print()
+        
+        #print data
+        for row in cur.execute(f"SELECT * FROM {table_name[0]}"):
+            print(row)
+        print("-"*50)
+        
+    # close connection to database
     conn.close()
 
 

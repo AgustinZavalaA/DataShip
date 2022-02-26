@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import date
+from typing import Optional
 
 
 @dataclass
@@ -10,7 +11,7 @@ class User:
     password: str
     color_scheme: str
     created_at: date
-    email: str | None = None
+    email: Optional[str] = None
 
 
 def main():
