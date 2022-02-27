@@ -1,7 +1,6 @@
 from DataShip.db_management.db_models import User
 from DataShip.db_management.db_manager import DB_manager
-from DataShip.views import signup, login
-import numpy as np
+from DataShip.views import signup, login, feed_post_admin
 import streamlit as st
 from streamlit_option_menu import option_menu
 
@@ -49,6 +48,8 @@ class DataShip:
             self.apps["Signup"] = [signup.signup, "bi-person-plus"]
         else:
             self.apps["My files"] = [files_saved, "bi-files"]
+            if st.session_state["user"].username == "admin":
+                self.apps["VIEW FEEDBACK"] = [feed_post_admin.feedback_post, "bi-cog"]
 
     def serve(self):
         with st.sidebar:

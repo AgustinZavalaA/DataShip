@@ -47,7 +47,9 @@ CREATE TABLE Feedback_post (
     type_id INTEGER NOT NULL,
     title STRING NOT NULL,
     post TEXT NOT NULL,
-    created_at DATE NOT NULL
+    created_at DATE NOT NULL,
+    done BOOLEAN NOT NULL,
+    user_id INTEGER
 );
 CREATE TABLE Feedback_type (
     id INTEGER PRIMARY KEY AUTOINCREMENT ,

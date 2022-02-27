@@ -53,6 +53,11 @@ class DB_manager:
         )
         con.commit()
         return True
+    
+    def get_feedback_posts(self, con: Connection) -> list:
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Feedback_post")
+        return cur.fetchall()
 
     @st.cache(hash_funcs={Connection: id})
     def get_connection(self) -> Connection:
