@@ -3,7 +3,7 @@ from sqlite3 import Connection
 import streamlit as st
 import hashlib
 
-from DataShip.db_management.db_models import User
+from DataShip.db_management.db_models import User, Feedback_post, Feedback_type
 
 
 def hash_password(password):
@@ -54,9 +54,23 @@ class DB_manager:
         con.commit()
         return True
     
-    def get_feedback_posts(self, con: Connection) -> list:
+    def get_feedback_posts(self, con: Connection) -> list[tuple]:
         cur = con.cursor()
         cur.execute("SELECT * FROM Feedback_post")
+        return cur.fetchall()
+    
+    def create_feedback_post(self, con: Connection, feedback_post: Feedback_post) -> bool:
+        cur = con.cursor()
+        cur.execute(
+            "INSERT INTO Feedback_post (type_id, title, post, created_at, done, user_id) VALUES (?, ?, ?, ?, ?, ?)",
+            (feedback_post.type_id, feedback_post.title, feedback_post.post, feedback_post.created_at, feedback_post.done, feedback_post.user_id),
+        )
+        con.commit()
+        return True
+    
+    def get_all_feedback_types(self, con: Connection) -> list[tuple]:
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Feedback_type")
         return cur.fetchall()
 
     @st.cache(hash_funcs={Connection: id})

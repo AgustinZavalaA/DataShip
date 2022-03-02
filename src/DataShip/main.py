@@ -1,6 +1,6 @@
 from DataShip.db_management.db_models import User
 from DataShip.db_management.db_manager import DB_manager
-from DataShip.views import signup, login, feed_post_admin
+from DataShip.views import signup, login, feed_post_admin, feedback_form
 import streamlit as st
 from streamlit_option_menu import option_menu
 
@@ -16,9 +16,6 @@ def home(DB_MAN, DB_CONN):
 def settings(DB_MAN, DB_CONN):
     st.subheader("Settings")
 
-
-def feedback(DB_MAN, DB_CONN):
-    st.subheader("Feedback")
 
 
 def modules(DB_MAN, DB_CONN):
@@ -37,7 +34,7 @@ class DataShip:
             "Home": [home, "bar-chart-line"],
             "Modules": [modules, "box-seam"],
             "Settings": [settings, "gear"],
-            "Feedback": [feedback, "megaphone"],
+            "Feedback": [feedback_form.feedback, "megaphone"],
         }
 
         if "user" not in st.session_state.keys():
@@ -50,6 +47,14 @@ class DataShip:
             self.apps["My files"] = [files_saved, "bi-files"]
             if st.session_state["user"].username == "admin":
                 self.apps["VIEW FEEDBACK"] = [feed_post_admin.feedback_post, "bi-cog"]
+                
+        hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+        st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
     def serve(self):
         with st.sidebar:

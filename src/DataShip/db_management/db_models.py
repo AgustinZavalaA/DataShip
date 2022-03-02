@@ -12,6 +12,22 @@ class User:
     color_scheme: str
     created_at: date
     email: Optional[str] = None
+    
+@dataclass
+class Feedback_post:
+    id: int
+    type_id: int
+    title: str
+    post: str
+    created_at: date
+    done: bool
+    user_id: Optional[int] = None
+    
+@dataclass
+class Feedback_type:
+    id: int
+    name: str
+    created_at: date
 
 
 def main():
