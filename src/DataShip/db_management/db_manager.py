@@ -18,6 +18,13 @@ class DB_manager:
         cur = con.cursor()
         cur.execute("SELECT * FROM users")
         return cur.fetchall()
+    
+    def get_username_by_id(self, con: Connection, user_id: int) -> str:
+        if user_id == 'nan':
+            return "Anonymous"
+        cur = con.cursor()
+        cur.execute("SELECT username FROM users WHERE id = ?", (user_id,))
+        return cur.fetchone()[0]
 
     def check_user_password(self, con: Connection, username_or_emal: str, password: str) ->  User:
         cur = con.cursor()

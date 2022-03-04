@@ -35,7 +35,7 @@ def feedback_post(DB_MAN, DB_CONN):
                 html_text = f"### 🚩 <span style=color:red> VULNERABILITY </span> "                
             st.markdown (html_text, unsafe_allow_html=True)
             
-            st.caption(f"{row['SUMBMITTED ON']} by {row['USER_ID']}")
+            st.caption(f"{row['SUMBMITTED ON']} by {DB_MAN.get_username_by_id(DB_CONN, row['USER_ID'])}")
             st.write(row['POST'])
             
             st.write("-"*50)
