@@ -20,7 +20,7 @@ def feedback_post(DB_MAN, DB_CONN):
     gb.configure_selection(selection_mode="multiple", use_checkbox=True)
     gridOptions = gb.build()
 
-    data = AgGrid(df, gridOptions=gridOptions, enable_enterprise_modules=True, update_mode=GridUpdateMode.SELECTION_CHANGED, theme="streamlit")
+    data = AgGrid(df, gridOptions=gridOptions, enable_enterprise_modules=True, update_mode=GridUpdateMode.SELECTION_CHANGED, theme="material")
     
     if data:
         for row in data['selected_rows']:

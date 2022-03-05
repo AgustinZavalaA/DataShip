@@ -3,6 +3,10 @@ from DataShip.db_management.db_manager import DB_manager
 from DataShip.views import signup, login, feed_post_admin, feedback_form
 import streamlit as st
 from streamlit_option_menu import option_menu
+import random
+
+icons = '🚀🌌🛰️🌛👽'
+st.set_page_config(page_title="DataShip", page_icon=random.choice(list(icons)), layout="wide")
 
 DB_URI_SQLITE = "dataship.db"
 DB_MAN = DB_manager(DB_URI_SQLITE)
@@ -17,9 +21,6 @@ def settings(DB_MAN, DB_CONN):
     st.subheader("Settings")
 
 
-
-def modules(DB_MAN, DB_CONN):
-    st.subheader("Modules")
 
 
 def files_saved(DB_MAN, DB_CONN):
@@ -71,7 +72,6 @@ class DataShip:
                 default_index=0,
             )
         self.apps[navigation][0](DB_MAN, DB_CONN)
-
 
 def main():
     page = DataShip()
