@@ -40,6 +40,7 @@ CREATE TABLE Modules (
 );
 CREATE TABLE Users_modules (
     id INTEGER PRIMARY KEY AUTOINCREMENT ,
+    user_id INTEGER NOT NULL,
     module_id INTEGER NOT NULL
 );
 CREATE TABLE Feedback_post (

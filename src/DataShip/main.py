@@ -1,6 +1,6 @@
 from DataShip.db_management.db_models import User
 from DataShip.db_management.db_manager import DB_manager
-from DataShip.views import signup, login, feed_post_admin, feedback_form
+from DataShip.views import signup, login, feed_post_admin, feedback_form, modules_store
 import streamlit as st
 from streamlit_option_menu import option_menu
 import random
@@ -33,7 +33,7 @@ class DataShip:
 
         self.apps = {
             "Home": [home, "bar-chart-line"],
-            "Modules": [modules, "box-seam"],
+            "Modules": [modules_store.modules, "box-seam"],
             "Settings": [settings, "gear"],
             "Feedback": [feedback_form.feedback, "megaphone"],
         }
