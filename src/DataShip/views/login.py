@@ -1,8 +1,9 @@
-from DataShip.db_management.db_models import User
 from DataShip.db_management.db_manager import DB_manager
 import streamlit as st
+from sqlite3 import Connection
 
-def login(DB_MAN, DB_CONN):
+
+def login(DB_MAN: DB_manager, DB_CONN: Connection):
     st.subheader("Login")
     st.write("Don't have an account yet? Signup")
     with st.form("login"):

@@ -2,6 +2,7 @@ import sqlite3
 from sqlite3 import Connection
 import streamlit as st
 import hashlib
+from typing import Optional
 
 from DataShip.db_management.db_models import User, Feedback_post, Feedback_type, Module
 
@@ -19,16 +20,14 @@ class DB_manager:
         cur.execute("SELECT * FROM users")
         return cur.fetchall()
 
-    def get_username_by_id(self, con: Connection, user_id: int) -> str:
+    def get_username_by_id(self, con: Connection, user_id: str) -> str:
         if user_id == "nan":
             return "Anonymous"
         cur = con.cursor()
         cur.execute("SELECT username FROM users WHERE id = ?", (user_id,))
-        return cur.fetchone()[0]
+        return str(cur.fetchone()[0])
 
-    def check_user_password(
-        self, con: Connection, username_or_emal: str, password: str
-    ) -> User:
+    def check_user_password(self, con: Connection, username_or_emal: str, password: str) -> Optional[User]:
         cur = con.cursor()
         if username_or_emal.find("@") != -1:
             cur.execute("SELECT * FROM users WHERE email = ?", (username_or_emal,))
@@ -36,7 +35,7 @@ class DB_manager:
             cur.execute("SELECT * FROM users WHERE username = ?", (username_or_emal,))
         user = cur.fetchone()
         if user is None:
-            return False
+            return None
 
         hashed_password = user[4]
         if hash_password(password) == hashed_password:
@@ -50,7 +49,7 @@ class DB_manager:
                 created_at=user[6],
             )
 
-        return False
+        return None
 
     def get_modules_from_user(self, con: Connection, user_id: int) -> list[Module]:
         cur = con.cursor()
@@ -72,9 +71,7 @@ class DB_manager:
         cur.execute("SELECT * FROM modules")
         modules = []
         for row in cur.fetchall():
-            modules.append(
-                Module(id=row[0], name=row[1], description=row[2], created_at=row[3])
-            )
+            modules.append(Module(id=row[0], name=row[1], description=row[2], created_at=row[3]))
         return modules
 
     def add_module_to_user(self, con: Connection, user_id: int, module_id: int) -> bool:
@@ -104,14 +101,17 @@ class DB_manager:
         con.commit()
         return True
 
-    def get_feedback_posts(self, con: Connection) -> list[tuple]:
+    def get_feedback_posts(self, con: Connection) -> list[Feedback_post]:
         cur = con.cursor()
         cur.execute("SELECT * FROM Feedback_post")
-        return cur.fetchall()
+        return [
+            Feedback_post(
+                id=row[0], type_id=row[1], title=row[2], post=row[3], created_at=row[4], done=row[5], user_id=row[6]
+            )
+            for row in cur.fetchall()
+        ]
 
-    def create_feedback_post(
-        self, con: Connection, feedback_post: Feedback_post
-    ) -> bool:
+    def create_feedback_post(self, con: Connection, feedback_post: Feedback_post) -> bool:
         cur = con.cursor()
         cur.execute(
             "INSERT INTO Feedback_post (type_id, title, post, created_at, done, user_id) VALUES (?, ?, ?, ?, ?, ?)",
@@ -127,10 +127,10 @@ class DB_manager:
         con.commit()
         return True
 
-    def get_all_feedback_types(self, con: Connection) -> list[tuple]:
+    def get_all_feedback_types(self, con: Connection) -> list[Feedback_type]:
         cur = con.cursor()
         cur.execute("SELECT * FROM Feedback_type")
-        return cur.fetchall()
+        return [Feedback_type(id=row[0], name=row[1], created_at=row[2]) for row in cur.fetchall()]
 
     @st.cache(hash_funcs={Connection: id})
     def get_connection(self) -> Connection:
@@ -152,9 +152,7 @@ def main():
         )
 
     except getopt.GetoptError:
-        print(
-            "Usage: db_manager.py -c|--create_base_database|-p|--populate_base_database|-s|--show_database"
-        )
+        print("Usage: db_manager.py -c|--create_base_database|-p|--populate_base_database|-s|--show_database")
         sys.exit(2)
 
     DB_URI = "dataship.db"
@@ -163,19 +161,13 @@ def main():
 
     for opt, arg in opts:
         if opt in ("-c", "--create_base_database"):
-            execute_script(
-                db_man, "src/DataShip/db_management/scripts/create_dataship_db.sql"
-            )
+            execute_script(db_man, "src/DataShip/db_management/scripts/create_dataship_db.sql")
         elif opt in ("-p", "--populate_base_database"):
-            execute_script(
-                db_man, "src/DataShip/db_management/scripts/populate_dataship_db.sql"
-            )
+            execute_script(db_man, "src/DataShip/db_management/scripts/populate_dataship_db.sql")
         elif opt in ("-s", "--show_database"):
             show_db()
         else:
-            print(
-                "Usage: db_manager.py -c|--create_base_database|-p|--populate_base_database"
-            )
+            print("Usage: db_manager.py -c|--create_base_database|-p|--populate_base_database")
             sys.exit(2)
 
 
@@ -185,9 +177,7 @@ def show_db():
     cur = conn.cursor()
 
     # Get all table names
-    tables = cur.execute(
-        "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;"
-    ).fetchall()
+    tables = cur.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;").fetchall()
     tables.remove(("sqlite_sequence",))
 
     # Iterate over all tables
@@ -200,7 +190,7 @@ def show_db():
             print(f" {col[1]}", end="")
         print()
 
-        # print data
+        # print the data
         for row in cur.execute(f"SELECT * FROM {table_name[0]}"):
             print(row)
         print("-" * 50)

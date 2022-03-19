@@ -2,9 +2,10 @@ from DataShip.db_management.db_models import User
 from DataShip.db_management.db_manager import DB_manager
 import streamlit as st
 from datetime import date
+from sqlite3 import Connection
 
 
-def signup(DB_MAN, DB_CONN):
+def signup(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
     st.subheader("Signup")
     with st.form("signup"):
         name = st.text_input("Full name *")
@@ -15,7 +16,15 @@ def signup(DB_MAN, DB_CONN):
         color2 = st.color_picker("Secondary color")
         submit = st.form_submit_button("signup")
         if submit:
-            user = User(id=1,name=name, username=username, password=password, color_scheme=f"{color1}:{color2}", created_at=date.today(), email=email if email else None)
+            user = User(
+                id=1,
+                name=name,
+                username=username,
+                password=password,
+                color_scheme=f"{color1}:{color2}",
+                created_at=date.today(),
+                email=email if email else None,
+            )
             user_created = DB_MAN.create_user(DB_CONN, user)
             if user_created:
                 st.success(f"Welcome {user.name}")
@@ -23,4 +32,3 @@ def signup(DB_MAN, DB_CONN):
                 st.experimental_rerun()
             else:
                 st.error("Username/password is incorrect")
-
