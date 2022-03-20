@@ -38,19 +38,3 @@ class Module:
     name: str
     description: str
     created_at: date
-
-
-def main():
-    user = User(
-        id=1,
-        name="Juan",
-        username="juan",
-        password="1234",
-        color_scheme="dark",
-        created_at=date.today(),
-    )
-    print(user)
-
-
-if __name__ == "__main__":
-    main()
