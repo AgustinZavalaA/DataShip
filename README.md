@@ -1,5 +1,5 @@
 # DataShip
-![Tests](https://github.com/AgustinZavalaA/DataShip/actions/workflows/tests.yml/badge.svg)
+[![Tests](https://github.com/AgustinZavalaA/DataShip/actions/workflows/tests.yml/badge.svg)](https://github.com/AgustinZavalaA/DataShip/actions/workflows/tests.yml) [![Deploy](https://github.com/AgustinZavalaA/DataShip/actions/workflows/deploy.yml/badge.svg)](http://104.248.205.64:8501/)
 
 # TODO
 - checar aggrid streamlit para reemplazar el dataframe de pandas

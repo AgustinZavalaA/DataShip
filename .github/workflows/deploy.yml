@@ -1,4 +1,4 @@
-name: deploy to webserver
+name: Deploy
 
 # Controls when the action will run.
 on:
@@ -8,26 +8,26 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  on-success:
-    # This workflow contains a single job called "SFTP"
-    deploy-via-sftp:
-      runs-on: ubuntu-latest
-      steps:
-        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-        - uses: actions/checkout@v2
+  # This workflow contains a single job called "SFTP"
+  deploy-via-sftp:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-        - name: SFTP Deploy
-          uses: wlixcc/SFTP-Deploy-Action@v1.2.1
-          with:
-            username: root
-            server: 104.248.205.64
-            port: 22 # default is 22
-            ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: SFTP Deploy
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+        with:
+          username: root
+          server: 104.248.205.64
+          port: 22 # default is 22
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-            # will put all file under this path
-            local_path: ./* # default is ./*
-            # files will copy to under remote_path
-            remote_path: /root/DataShip/
+          # will put all file under this path
+          local_path: ./* # default is ./*
+          # files will copy to under remote_path
+          remote_path: /root/DataShip/
 
-            # sftp args
-            args: "-o ConnectTimeout=5"
+          # sftp args
+          args: "-o ConnectTimeout=5"
