@@ -31,7 +31,7 @@ def test_insert_user(db_conn_man: tuple[Connection, db_manager.DB_manager]) -> N
         email="test email",
     )
     # test that the new user is created in the database
-    assert db_man.create_user(db_conn, user) == True
+    assert db_man.create_user(db_conn, user) is True
     # test that the lenght of all users in the database is 4, because in the begining there are 3
     assert len(db_man.get_all_users(db_conn)) == 4
 
@@ -67,7 +67,7 @@ def test_check_pass_user(db_conn_man: tuple[Connection, db_manager.DB_manager]) 
         email="test@email",
     )
     # test that the new user is created in the database
-    assert db_man.create_user(db_conn, user) == True
+    assert db_man.create_user(db_conn, user) is True
     # test that the lenght of all users in the database is 4, because in the begining there are 3
     assert len(db_man.get_all_users(db_conn)) == 4
 
@@ -91,7 +91,7 @@ def test_modules_table(db_conn_man: tuple[Connection, db_manager.DB_manager]) ->
     # test get the first module and comparing the name
     assert db_man.get_module_by_id(db_conn, 2).name == "Median"
     # test linking the first module to the first user
-    assert db_man.add_module_to_user(db_conn, user_id=1, module_id=3) == True
+    assert db_man.add_module_to_user(db_conn, user_id=1, module_id=3) is True
     # test len of modules from user
     assert len(db_man.get_modules_from_user(db_conn, user_id=1)) == 1
     # test the name of the first module of the user
@@ -115,5 +115,5 @@ def test_feedback_and_types_table(db_conn_man: tuple[Connection, db_manager.DB_m
         done=False,
         user_id=1,
     )
-    assert db_man.create_feedback_post(db_conn, feebback_post) == True
+    assert db_man.create_feedback_post(db_conn, feebback_post) is True
     assert len(db_man.get_feedback_posts(db_conn)) == 18

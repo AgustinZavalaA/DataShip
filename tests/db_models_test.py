@@ -44,5 +44,5 @@ def test_feedback_post_model():
     assert feedback_post.title == "test title"
     assert feedback_post.post == "test post"
     assert feedback_post.created_at == date.today()
-    assert feedback_post.done == False
+    assert feedback_post.done is False
     assert feedback_post.user_id == 1
