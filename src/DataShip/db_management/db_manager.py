@@ -21,7 +21,7 @@ class DB_manager:
         return cur.fetchall()
 
     def get_username_by_id(self, con: Connection, user_id: str) -> str:
-        if user_id == "nan":
+        if user_id == "nan" or user_id == "" or user_id is None:
             return "Anonymous"
         cur = con.cursor()
         cur.execute("SELECT username FROM users WHERE id = ?", (user_id,))
