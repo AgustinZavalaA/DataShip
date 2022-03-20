@@ -77,7 +77,7 @@ def test_check_pass_user(db_conn_man: tuple[Connection, db_manager.DB_manager]) 
     assert db_man.check_user_password(db_conn, "test@email", "test password").name == user.name
 
     # test with an invalid password
-    assert db_man.check_user_password(db_conn, "test@email", "bad password") == None
+    assert db_man.check_user_password(db_conn, "test@email", "bad password") is None
 
 
 def test_modules_table(db_conn_man: tuple[Connection, db_manager.DB_manager]) -> None:
