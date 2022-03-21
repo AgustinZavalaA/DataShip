@@ -23,7 +23,6 @@ CREATE TABLE Users (
     username STRING NOT NULL UNIQUE,
     email STRING UNIQUE,
     password STRING NOT NULL,
-    color_scheme STRING NOT NULL,
     created_at DATE NOT NULL
 );
 CREATE TABLE Users_files (

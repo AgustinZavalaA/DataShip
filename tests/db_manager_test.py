@@ -26,7 +26,6 @@ def test_insert_user(db_conn_man: tuple[Connection, db_manager.DB_manager]) -> N
         name="test name",
         username="test username",
         password="test password",
-        color_scheme="test color scheme",
         created_at=date.today(),
         email="test email",
     )
@@ -62,7 +61,6 @@ def test_check_pass_user(db_conn_man: tuple[Connection, db_manager.DB_manager]) 
         name="test name",
         username="test username",
         password="test password",
-        color_scheme="test color scheme",
         created_at=date.today(),
         email="test@email",
     )

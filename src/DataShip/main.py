@@ -50,7 +50,9 @@ class DataShip:
 
         hide_streamlit_style = """
             <style>
-            #MainMenu {visibility: hidden;}
+            .e1pxm3bq7 {display: none;}
+            .e1pxm3bq1 {display: none;}
+            .css-6sbjhx {display: none;}
             footer {visibility: hidden;}
             </style>
             """

@@ -9,7 +9,6 @@ def test_user_model():
         name="test name",
         username="test username",
         password="test password",
-        color_scheme="test color scheme",
         created_at=date.today(),
         email="test email",
     )
@@ -17,7 +16,6 @@ def test_user_model():
     assert user.name == "test name"
     assert user.username == "test username"
     assert user.password == "test password"
-    assert user.color_scheme == "test color scheme"
     assert user.created_at == date.today()
     assert user.email == "test email"
 

@@ -45,8 +45,7 @@ class DB_manager:
                 username=user[2],
                 email=user[3],
                 password=user[4],
-                color_scheme=user[5],
-                created_at=user[6],
+                created_at=user[5],
             )
 
         return None
@@ -88,13 +87,12 @@ class DB_manager:
 
         user.password = hash_password(user.password)
         cur.execute(
-            "INSERT INTO users (name, username, email, password, color_scheme, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT INTO users (name, username, email, password, created_at) VALUES (?, ?, ?, ?, ?)",
             (
                 user.name,
                 user.username,
                 user.email,
                 user.password,
-                user.color_scheme,
                 user.created_at,
             ),
         )

@@ -12,8 +12,6 @@ def signup(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
         email = st.text_input("Email")
         username = st.text_input("Username *")
         password = st.text_input("Password *", type="password")
-        color1 = st.color_picker("Primary color")
-        color2 = st.color_picker("Secondary color")
         submit = st.form_submit_button("signup")
         if submit:
             user = User(
@@ -21,7 +19,6 @@ def signup(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
                 name=name,
                 username=username,
                 password=password,
-                color_scheme=f"{color1}:{color2}",
                 created_at=date.today(),
                 email=email if email else None,
             )

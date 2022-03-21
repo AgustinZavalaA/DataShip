@@ -9,7 +9,6 @@ class User:
     name: str
     username: str
     password: str
-    color_scheme: str
     created_at: date
     email: Optional[str] = None
 
