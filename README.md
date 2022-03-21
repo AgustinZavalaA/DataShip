@@ -2,11 +2,8 @@
 [![Tests](https://github.com/AgustinZavalaA/DataShip/actions/workflows/tests.yml/badge.svg)](https://github.com/AgustinZavalaA/DataShip/actions/workflows/tests.yml) [![Deploy](https://github.com/AgustinZavalaA/DataShip/actions/workflows/deploy.yml/badge.svg)](http://104.248.205.64:8501/)
 
 # TODO
-- checar aggrid streamlit para reemplazar el dataframe de pandas
 - checar el siguiente link para mejoras generales [tutorial](https://medium.com/@avra42/streamlit-python-cool-tricks-to-make-your-web-application-look-better-8abfc3763a5b)
-- Investigar como hacer unit testing al menos en los modulos de data analysis
 - Ir quitando los archivos de la carpeta functionality_tests, debido a que no son partes integradas al proyeto, son solo ejemplos.
-- Separar codigo en carpetas
   
 # Data Flow Diagram
 Data inside DataShip follow the next diagram, if you expierence something not showed here open an issue in the [github repository](https://github.com/AgustinZavalaA/DataShip) 
@@ -106,7 +103,7 @@ style main.py fill:green;
 ```
 
 # Requirements
-- [Python](https://www.python.org/ "Python latest version")
+- [Python 3.9](https://www.python.org/ "Python latest version")
 
 # Installation
 1. After installing python, download the current version of this repository, you can do it with the following command or download the zip archive and extract it:
@@ -150,4 +147,14 @@ python -m streamlit run src/DataShip/main.py
 or if you want to run the application in debug mode:
 ``` bash
 python -m streamlit run src/DataShip/main.py --debug
+```
+
+# Development
+1. If you want to run the tests, you must first install the dependencies:
+``` bash
+pip install -r requirements_dev.txt
+```
+2. Run the following command to run the tests with tox:
+``` bash
+tox
 ```
