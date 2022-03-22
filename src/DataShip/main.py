@@ -1,5 +1,5 @@
 from DataShip.db_management.db_manager import DB_manager
-from DataShip.views import signup, login, feed_post_admin, feedback_form, modules_store
+from DataShip.views import signup, login, feed_post_admin, feedback_form, modules_store, settings
 import streamlit as st
 from streamlit_option_menu import option_menu
 import random
@@ -17,10 +17,6 @@ def home(DB_MAN, DB_CONN) -> None:
     st.subheader("Home")
 
 
-def settings(DB_MAN, DB_CONN) -> None:
-    st.subheader("Settings")
-
-
 def files_saved(DB_MAN, DB_CONN) -> None:
     st.subheader("Files saved")
     st.write("Files saved")
@@ -33,7 +29,7 @@ class DataShip:
         self.apps: dict[str, tuple[Callable[..., None], str]] = {
             "Home": (home, "bar-chart-line"),
             "Modules": (modules_store.modules, "box-seam"),
-            "Settings": (settings, "gear"),
+            "Settings": (settings.settings, "gear"),
             "Feedback": (feedback_form.feedback, "megaphone"),
         }
 

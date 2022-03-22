@@ -35,6 +35,37 @@ def test_insert_user(db_conn_man: tuple[Connection, db_manager.DB_manager]) -> N
     assert len(db_man.get_all_users(db_conn)) == 4
 
 
+def test_update_user(db_conn_man: tuple[Connection, db_manager.DB_manager]) -> None:
+    db_conn, db_man = db_conn_man
+    user = User(
+        id=4,
+        name="test name",
+        username="test username",
+        password="test password",
+        created_at=date.today(),
+        email="test email",
+    )
+    # test that the new user is created in the database
+    assert db_man.create_user(db_conn, user) is True
+    # test that the lenght of all users in the database is 4, because in the begining there are 3
+    assert len(db_man.get_all_users(db_conn)) == 4
+    # test update an user
+    user2 = db_man.check_user_password(db_conn, "test username", "test password")
+    user2.name = "changed name"
+    user2.username = "changed username"
+    user2.password = "changed password"
+    user2.email = "changed email"
+    modified_user = db_man.update_user(db_conn, user2)
+    print(user, user2, modified_user)
+
+    assert user.id == modified_user.id
+    assert str(user.created_at) == modified_user.created_at
+    assert user.name != modified_user.name
+    assert user.username != modified_user.username
+    assert user.password != modified_user.password
+    assert user.email != modified_user.email
+
+
 def test_get_all_users(db_conn_man: tuple[Connection, db_manager.DB_manager]) -> None:
     db_conn, db_man = db_conn_man
 

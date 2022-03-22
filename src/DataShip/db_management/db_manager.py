@@ -99,6 +99,22 @@ class DB_manager:
         con.commit()
         return True
 
+    def update_user(self, con: Connection, user: User) -> bool:
+        cur = con.cursor()
+        cur.execute(
+            "UPDATE users SET name = ?, username = ?, email = ?, password = ? WHERE id = ?",
+            (
+                user.name,
+                user.username,
+                user.email,
+                hash_password(user.password),
+                user.id,
+            ),
+        )
+        con.commit()
+        user.password = hash_password(user.password)
+        return user
+
     def get_feedback_posts(self, con: Connection) -> list[Feedback_post]:
         cur = con.cursor()
         cur.execute("SELECT * FROM Feedback_post")
