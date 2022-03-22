@@ -1,3 +1,6 @@
+# user files
+user_files/
+
 # sqlite databases
 *.db*
 

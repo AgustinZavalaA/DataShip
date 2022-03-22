@@ -5,7 +5,7 @@ import os
 default_save_path = "user_files/"
 
 
-def read_file(file_path: str, file_type: str, relative: bool) -> Optional[pd.DataFrame]:
+def read_file(file_path, file_type: str, relative: bool) -> Optional[pd.DataFrame]:
     if relative:
         file_path = default_save_path + file_path
 
