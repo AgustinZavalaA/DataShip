@@ -27,7 +27,8 @@ CREATE TABLE Users (
 );
 CREATE TABLE Users_files (
     id INTEGER PRIMARY KEY AUTOINCREMENT ,
-    filename STRING NOT NULL UNIQUE,
+    user_id INTEGER NOT NULL,
+    filename STRING NOT NULL,
     file_type STRING NOT NULL,
     created_at DATE NOT NULL
 );

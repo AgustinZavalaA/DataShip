@@ -4,7 +4,7 @@ import streamlit as st
 import hashlib
 from typing import Optional
 
-from DataShip.db_management.db_models import User, Feedback_post, Feedback_type, Module
+from DataShip.db_management.db_models import User, Feedback_post, Feedback_type, Module, User_file
 
 
 def hash_password(password):
@@ -99,7 +99,7 @@ class DB_manager:
         con.commit()
         return True
 
-    def update_user(self, con: Connection, user: User) -> bool:
+    def update_user(self, con: Connection, user: User) -> User:
         cur = con.cursor()
         cur.execute(
             "UPDATE users SET name = ?, username = ?, email = ?, password = ? WHERE id = ?",
@@ -114,6 +114,28 @@ class DB_manager:
         con.commit()
         user.password = hash_password(user.password)
         return user
+
+    def link_file_to_user(self, con: Connection, file: User_file) -> User_file:
+        cur = con.cursor()
+        cur.execute(
+            "INSERT INTO users_files (user_id, filename, file_type, created_at) VALUES (?, ?, ?, ?)",
+            (file.user_id, file.file_name, file.file_type, file.created_at),
+        )
+        cur.execute("SELECT last_insert_rowid()")
+        file.id = cur.fetchone()[0]
+        con.commit()
+        return file
+
+    def delete_file_link(self, con: Connection, file_id: int) -> bool:
+        cur = con.cursor()
+        cur.execute("DELETE FROM users_files WHERE id = ?", (file_id,))
+        con.commit()
+        return True
+
+    def get_files_from_user(self, con: Connection, user_id: int) -> list[User_file]:
+        cur = con.cursor()
+        cur.execute("SELECT * FROM users_files WHERE user_id = ?", (user_id,))
+        return [User_file(row[0], row[1], row[2], row[3], row[4]) for row in cur.fetchall()]
 
     def get_feedback_posts(self, con: Connection) -> list[Feedback_post]:
         cur = con.cursor()
@@ -157,6 +179,8 @@ class DB_manager:
 def main():
     import sys
     import getopt
+    import os
+    import shutil
 
     try:
         opts, args = getopt.getopt(
@@ -175,6 +199,9 @@ def main():
 
     for opt, arg in opts:
         if opt in ("-c", "--create_base_database"):
+            if os.path.exists("user_files/"):
+                shutil.rmtree("user_files")
+            os.mkdir("user_files")
             execute_script(db_man, "src/DataShip/db_management/scripts/create_dataship_db.sql")
         elif opt in ("-p", "--populate_base_database"):
             execute_script(db_man, "src/DataShip/db_management/scripts/populate_dataship_db.sql")

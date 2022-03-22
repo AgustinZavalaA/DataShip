@@ -1,5 +1,5 @@
 from DataShip.db_management.db_manager import DB_manager
-from DataShip.views import signup, login, feed_post_admin, feedback_form, modules_store, settings
+from DataShip.views import signup, login, feed_post_admin, feedback_form, modules_store, settings, my_files
 import streamlit as st
 from streamlit_option_menu import option_menu
 import random
@@ -36,11 +36,14 @@ class DataShip:
         if "user" not in st.session_state.keys():
             st.session_state["user"] = None
 
+        if "current_file" not in st.session_state.keys():
+            st.session_state["current_file"] = None
+
         if st.session_state["user"] is None:
             self.apps["Login"] = (login.login, "bi-person")
             self.apps["Signup"] = (signup.signup, "bi-person-plus")
         else:
-            self.apps["My files"] = (files_saved, "bi-files")
+            self.apps["My files"] = (my_files.files, "bi-files")
             if st.session_state["user"].username == "admin":
                 self.apps["VIEW FEEDBACK"] = (feed_post_admin.feedback_post, "bi-cog")
 

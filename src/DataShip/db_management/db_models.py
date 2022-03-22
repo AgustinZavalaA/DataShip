@@ -37,3 +37,12 @@ class Module:
     name: str
     description: str
     created_at: date
+
+
+@dataclass
+class User_file:
+    id: int
+    user_id: int
+    file_name: str
+    file_type: str
+    created_at: date
