@@ -19,7 +19,9 @@ def home(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
             df = ufrw.read_file("demo_data/demo_data.csv", "csv", False)
             st.session_state["current_file"] = df
             st.experimental_rerun()
-        st.write("You can also can save your own file if you have one account, just **Sign Up** and go to **My Files**")
+        st.write(
+            "You can also can save your own file if you have one account, just **Sign Up** and go to **My Files**"
+        )
         file = st.file_uploader("", type=["csv", "txt", "json", "xlsx"])
         if file:
             df = ufrw.read_file(file, file.name.split(".")[-1], False)
@@ -39,7 +41,9 @@ def home(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
         with st.sidebar:
             if st.session_state["user"] is not None:
                 st.subheader("Data Analysis Modules")
-                user_modules_bd = DB_MAN.get_modules_from_user(DB_CONN, st.session_state["user"].id)
+                user_modules_bd = DB_MAN.get_modules_from_user(
+                    DB_CONN, st.session_state["user"].id
+                )
                 user_modules = [x.name for x in user_modules_bd]
             else:
                 user_modules = ["Mean", "Median", "Mode"]
@@ -49,10 +53,11 @@ def home(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
                 if st.checkbox(module):
                     active_modules[module] = (active_modules[module][0], True)
 
-        list_active_modules = [x[0] for x in active_modules.values() if x[1]]
         selected_columns = st.multiselect("Select columns", df.columns)
 
         analysis_df = df[selected_columns]
 
-        for module in list_active_modules:  # type: ignore
-            st.write(module(analysis_df))  # type: ignore
+        for key, value in active_modules.items():
+            if value[1]:
+                st.subheader(f"Analysis of {key}")
+                st.write(value[0](analysis_df))
