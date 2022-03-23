@@ -25,7 +25,8 @@ INSERT INTO modules(name, description, created_at)
         ('Variance', '', DATE('now')),
         ('Linear Regression', '', DATE('now')),
         ('Clusterization', '', DATE('now')),
-        ('Graphing', '', DATE('now'));
+        ('Graphing', '', DATE('now')),
+        ('Mapping', '', DATE('now'));
 
 -- populate feedback_post table
 INSERT INTO feedback_post(type_id, title, post, created_at, user_id, done)

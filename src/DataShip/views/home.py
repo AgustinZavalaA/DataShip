@@ -19,6 +19,10 @@ def home(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
             df = ufrw.read_file("demo_data/demo_data.csv", "csv", False)
             st.session_state["current_file"] = df
             st.experimental_rerun()
+        if st.button("Load Demo file (coordinates)"):
+            df = ufrw.read_file("demo_data/data_coordinates.json", "json", False)
+            st.session_state["current_file"] = df
+            st.experimental_rerun()
         st.write(
             "You can also can save your own file if you have one account, just **Sign Up** and go to **My Files**"
         )
@@ -60,4 +64,6 @@ def home(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
         for key, value in active_modules.items():
             if value[1]:
                 st.subheader(f"Analysis of {key}")
-                st.write(value[0](analysis_df))
+                result = value[0](analysis_df)
+                if not result.empty:
+                    st.write(result)

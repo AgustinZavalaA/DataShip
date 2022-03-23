@@ -113,8 +113,8 @@ def test_modules_table(db_conn_man: tuple[Connection, db_manager.DB_manager]) ->
     db_conn, db_man = db_conn_man
 
     all_modules = db_man.get_all_modules(db_conn)
-    # test the number of modules in database, at start there are 8
-    assert len(all_modules) == 8
+    # test the number of modules in database, at start there are 9
+    assert len(all_modules) == 9
     # test the first name of the module (mean)
     assert all_modules[0].name == "Mean"
     # test get the first module and comparing the name
