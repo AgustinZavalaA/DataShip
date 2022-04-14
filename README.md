@@ -1,11 +1,15 @@
 # DataShip
 [![Tests](https://github.com/AgustinZavalaA/DataShip/actions/workflows/tests.yml/badge.svg)](https://github.com/AgustinZavalaA/DataShip/actions/workflows/tests.yml) [![Deploy](https://github.com/AgustinZavalaA/DataShip/actions/workflows/deploy.yml/badge.svg)](http://104.248.205.64:8501/)
 
-# TODO
-- checar el siguiente link para mejoras generales [tutorial](https://medium.com/@avra42/streamlit-python-cool-tricks-to-make-your-web-application-look-better-8abfc3763a5b)
-- Ir quitando los archivos de la carpeta functionality_tests, debido a que no son partes integradas al proyeto, son solo ejemplos.
-  
-# Data Flow Diagram
+Datatship is an easy to use, open source, and free data analysis platform. It is a web application that allows users to upload data files, and then perform data analysis on them.
+
+Performing the following analysis:
+- **Data Visualization (Multiple charts types and modes)**
+- **Statistical Analysis (Mean, Median, Mode, Standard Deviation, Variance)**
+- **Machine Learning (Linear Regression, K-Means)**
+
+
+## Data Flow Diagram
 Data inside DataShip follow the next diagram, if you expierence something not showed here open an issue in the [github repository](https://github.com/AgustinZavalaA/DataShip) 
 
 <style>
@@ -64,7 +68,7 @@ graph TD
     style savefeed fill:#1AF399
 ```
 The next tables show in more details the flow of the data in the colored boxes.
-##  <span style="color:purple">Modules</span>
+###  <span style="color:purple">Modules</span>
 | Module name        | Module description | Input | Output method |
 | ------------------ | ------------------ | ----- | ------------- |
 | Mean               | ---                | ---   | ---           |
@@ -79,7 +83,7 @@ The next tables show in more details the flow of the data in the colored boxes.
 
 
 
-# Project File Structure
+## Project File Structure
 The final project structure should look something like this:
 ```mermaid
 graph LR;
@@ -102,10 +106,10 @@ tests --> views_tests
 style main.py fill:green;
 ```
 
-# Requirements
+## Requirements
 - [Python 3.9](https://www.python.org/ "Python latest version")
 
-# Installation
+## Installation
 1. After installing python, download the current version of this repository, you can do it with the following command or download the zip archive and extract it:
 ``` bash
 git clone https://github.com/AgustinZavalaA/DataShip.git
@@ -149,7 +153,7 @@ or if you want to run the application in debug mode:
 python -m streamlit run src/DataShip/main.py --debug
 ```
 
-# Development
+## Development
 1. If you want to run the tests, you must first install the dependencies:
 ``` bash
 pip install -r requirements_dev.txt

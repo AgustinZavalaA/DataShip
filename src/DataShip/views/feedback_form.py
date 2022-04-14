@@ -6,6 +6,13 @@ from datetime import date
 
 
 def feedback(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
+    """ This function represent a view for viewing feedback posts.
+
+    Args:
+        DB_MAN (DB_manager): database manager.
+        DB_CONN (Connection): database connection.
+    """
+    
     st.subheader("Feedback")
     with st.form("Feedback"):
         all_feedback_types = DB_MAN.get_all_feedback_types(DB_CONN)

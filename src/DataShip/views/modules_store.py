@@ -4,6 +4,14 @@ import streamlit as st
 
 
 def modules(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
+    """ This function represent a view for viewing all .
+
+    Args:
+        DB_MAN (DB_manager): database manager.
+        DB_CONN (Connection): database connection.
+    """
+    
+    # Shows the user the current user modules
     user_modules = []
     if st.session_state["user"] is None:
         st.warning("You aren't logged in yet, all changes you make won't take effect. ")
@@ -16,6 +24,7 @@ def modules(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
     with st.spinner("Loading modules..."):
         all_modules = DB_MAN.get_all_modules(DB_CONN)
 
+    # Show the user the available modules to get
     st.subheader("Modules store")
     st.write("----")
     n = 3

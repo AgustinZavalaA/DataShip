@@ -4,6 +4,13 @@ from sqlite3 import Connection
 
 
 def login(DB_MAN: DB_manager, DB_CONN: Connection):
+    """This function represent a view for validating users logging in.
+
+    Args:
+        DB_MAN (DB_manager): database manager.
+        DB_CONN (Connection): database connection.
+    """
+
     st.subheader("Login")
     st.write("Don't have an account yet? Signup")
     with st.form("login"):

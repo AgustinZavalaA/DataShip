@@ -9,6 +9,7 @@ import plotly.express as px
 
 
 def get_active_modules() -> dict[str, tuple[Callable[..., pd.DataFrame], bool]]:
+    """This function returns a dictionary of all the modules and their status"""
     return {
         "Mean": (mean_module, False),
         "Median": (median_module, False),
@@ -97,10 +98,6 @@ def cluster_module(dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     Calculate the cluster of a dataframe using sklearn
     """
-    # if len(dataframe.columns) == 2:
-    #     # add a column of range to the dataframe
-    #     dataframe["range"] = np.arange(len(dataframe))
-    #     dataframe = dataframe[["range", dataframe.columns[0]]]
     if len(dataframe.columns) != 3:
         st.error("Clusterization can only be applied to dataframes with 3 columns")
         return pd.DataFrame()
@@ -113,28 +110,31 @@ def cluster_module(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     kmeans = KNeighborsClassifier(n_neighbors=n_clusters)
 
-    kmeans.fit(X.values, y)
+    try:
+        kmeans.fit(X.values, y)
 
-    # create meshgrid
-    mesh_steps = 500
-    margin = 0.25
-    x_min, x_max = X.iloc[:, 0].min() - margin, X.iloc[:, 0].max() + margin
-    y_min, y_max = X.iloc[:, 1].min() - margin, X.iloc[:, 1].max() + margin
-    x_range = np.linspace(x_min, x_max, mesh_steps)
-    y_range = np.linspace(y_min, y_max, mesh_steps)
-    xx, yy = np.meshgrid(x_range, y_range)
+        # create meshgrid
+        mesh_steps = 500
+        margin = 0.25
+        x_min, x_max = X.iloc[:, 0].min() - margin, X.iloc[:, 0].max() + margin
+        y_min, y_max = X.iloc[:, 1].min() - margin, X.iloc[:, 1].max() + margin
+        x_range = np.linspace(x_min, x_max, mesh_steps)
+        y_range = np.linspace(y_min, y_max, mesh_steps)
+        xx, yy = np.meshgrid(x_range, y_range)
 
-    # fill in the grid with the cluster labels
-    Z = kmeans.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 1]
-    Z = Z.reshape(xx.shape)
+        # fill in the grid with the cluster labels
+        Z = kmeans.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 1]
+        Z = Z.reshape(xx.shape)
 
-    fig = go.Figure(go.Scatter(x=X.iloc[:, 0], y=X.iloc[:, 1], mode="markers"))
-    fig.add_trace(
-        go.Contour(
-            x=x_range, y=y_range, z=Z, colorscale="RdBu", showscale=True, opacity=0.8
+        fig = go.Figure(go.Scatter(x=X.iloc[:, 0], y=X.iloc[:, 1], mode="markers"))
+        fig.add_trace(
+            go.Contour(
+                x=x_range, y=y_range, z=Z, colorscale="RdBu", showscale=True, opacity=0.8
+            )
         )
-    )
-    st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True)
+    except Exception as e:
+        st.error("An error occurred while trying to cluster the data. Please try again or select a valid class column.")
 
     return pd.DataFrame()
 
@@ -143,33 +143,41 @@ def graph_module(dataframe: pd.DataFrame, enable_st: bool = True) -> pd.DataFram
     """
     Calculate the graph of a dataframe using plotly
     """
-    fig_types = ["Scatter", "Bar", "Box", "Histogram", "Pie", "Line", "Violin"]
+    fig_types = ["Scatter", "Bar", "Box", "Histogram", "Line", "Violin"]
     if enable_st:
         selected_fig_type = st.selectbox("Select a figure type", fig_types)
     else:
         selected_fig_type = fig_types[0]
 
-    if selected_fig_type == "Scatter":
-        fig = px.scatter(dataframe)
-    elif selected_fig_type == "Bar":
-        fig = px.bar(dataframe)
-    elif selected_fig_type == "Box":
-        fig = px.box(dataframe)
-    elif selected_fig_type == "Histogram":
-        fig = px.histogram(dataframe)
-    elif selected_fig_type == "Pie":
-        fig = px.pie(dataframe)
-    elif selected_fig_type == "Line":
-        fig = px.line(dataframe)
-    else:
-        fig = px.violin(dataframe)
+    try:
+        if selected_fig_type == "Scatter":
+            fig = px.scatter(dataframe)
+        elif selected_fig_type == "Bar":
+            fig = px.bar(dataframe)
+        elif selected_fig_type == "Box":
+            fig = px.box(dataframe)
+        elif selected_fig_type == "Histogram":
+            fig = px.histogram(dataframe)
+        elif selected_fig_type == "Pie":
+            fig = px.pie(dataframe)
+        elif selected_fig_type == "Line":
+            fig = px.line(dataframe)
+        else:
+            fig = px.violin(dataframe)
 
-    if enable_st:
-        st.plotly_chart(fig, use_container_width=True)
+        if enable_st:
+            st.plotly_chart(fig, use_container_width=True)
+    except Exception as e:
+        st.error(
+            "An error occurred while plotting the graph, please try again with fewer columns of the same type"
+        )
     return pd.DataFrame()
 
 
 def map_module(dataframe: pd.DataFrame, enable_st: bool = True) -> pd.DataFrame:
+    """
+    Represent a dataframe as a map using streamlit API
+    """
     if len(dataframe.columns) != 2:
         st.error("Mapping can only be applied to dataframes with 2 columns")
         return pd.DataFrame()

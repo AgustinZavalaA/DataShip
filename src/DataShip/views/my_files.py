@@ -7,10 +7,19 @@ from datetime import date
 
 
 def files(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
+    """This function represents a view to the my files page.
+
+    Args:
+        DB_MAN (DB_manager): database manager.
+        DB_CONN (Connection): database connection.
+    """
+    
     st.subheader("Upload a new file")
+    # let the user upload multiple files to store in the server
     new_files = st.file_uploader("", type=["csv", "txt", "json", "xlsx"], accept_multiple_files=True)
 
     if new_files is not None:
+        # iterate over the uploaded files to store them in the database
         for n_file in new_files:
             f = User_file(
                 id=1,
@@ -22,12 +31,13 @@ def files(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
             f = DB_MAN.link_file_to_user(DB_CONN, f)
             df = ufrw.save_file_in_server(n_file, f.file_type, str(f.id))
 
-            # st.write(df)
             st.success(f"Succesfully uploaded file {n_file.name}")
             st.session_state["current_file"] = df
 
+    # get the user files from the database
     user_files = DB_MAN.get_files_from_user(DB_CONN, st.session_state["user"].id)
 
+    # show the file info in 3 columns
     st.subheader("My Files")
     st.write("----")
     n = 3

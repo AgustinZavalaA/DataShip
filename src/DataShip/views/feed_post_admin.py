@@ -9,6 +9,12 @@ from DataShip.db_management.db_models import Feedback_post
 
 
 def feedback_post(DB_MAN, DB_CONN) -> None:
+    """ This function represent a view for creating feedback posts.
+
+    Args:
+        DB_MAN (_type_): database manager.
+        DB_CONN (_type_): database connection.
+    """
     st.title("Feedback Posts")
     feedback_posts = DB_MAN.get_feedback_posts(DB_CONN)
 

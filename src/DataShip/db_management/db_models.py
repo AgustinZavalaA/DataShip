@@ -2,9 +2,13 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Optional
 
+""" This module describes the database models used by the DataShip application."""
+
 
 @dataclass
 class User:
+    """This class represent an user of the DataShip application."""
+
     id: int
     name: str
     username: str
@@ -15,6 +19,8 @@ class User:
 
 @dataclass
 class Feedback_post:
+    """This class represent a feedback post of the DataShip application."""
+
     id: int
     type_id: int
     title: str
@@ -26,6 +32,8 @@ class Feedback_post:
 
 @dataclass
 class Feedback_type:
+    """This class represent a feedback type of the DataShip application."""
+
     id: int
     name: str
     created_at: date
@@ -33,6 +41,8 @@ class Feedback_type:
 
 @dataclass
 class Module:
+    """This class represent a module of the DataShip application."""
+
     id: int
     name: str
     description: str
@@ -41,6 +51,8 @@ class Module:
 
 @dataclass
 class User_file:
+    """This class represent a user file of the DataShip application."""
+
     id: int
     user_id: int
     file_name: str
