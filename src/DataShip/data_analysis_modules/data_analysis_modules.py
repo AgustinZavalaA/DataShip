@@ -129,12 +129,19 @@ def cluster_module(dataframe: pd.DataFrame) -> pd.DataFrame:
         fig = go.Figure(go.Scatter(x=X.iloc[:, 0], y=X.iloc[:, 1], mode="markers"))
         fig.add_trace(
             go.Contour(
-                x=x_range, y=y_range, z=Z, colorscale="RdBu", showscale=True, opacity=0.8
+                x=x_range,
+                y=y_range,
+                z=Z,
+                colorscale="RdBu",
+                showscale=True,
+                opacity=0.8,
             )
         )
         st.plotly_chart(fig, use_container_width=True)
-    except Exception as e:
-        st.error("An error occurred while trying to cluster the data. Please try again or select a valid class column.")
+    except Exception:
+        st.error(
+            "An error occurred while trying to cluster the data. Please try again or select a valid class column."
+        )
 
     return pd.DataFrame()
 
@@ -167,7 +174,7 @@ def graph_module(dataframe: pd.DataFrame, enable_st: bool = True) -> pd.DataFram
 
         if enable_st:
             st.plotly_chart(fig, use_container_width=True)
-    except Exception as e:
+    except Exception:
         st.error(
             "An error occurred while plotting the graph, please try again with fewer columns of the same type"
         )

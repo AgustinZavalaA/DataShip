@@ -6,20 +6,22 @@ from datetime import date
 
 
 def feedback(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
-    """ This function represent a view for viewing feedback posts.
+    """This function represent a view for viewing feedback posts.
 
     Args:
         DB_MAN (DB_manager): database manager.
         DB_CONN (Connection): database connection.
     """
-    
+
     st.subheader("Feedback")
     with st.form("Feedback"):
         all_feedback_types = DB_MAN.get_all_feedback_types(DB_CONN)
 
         title = st.text_input("Title* ")
         post = st.text_area("Post description* ")
-        feedback_type = st.selectbox("Select an option", [x.name for x in all_feedback_types])
+        feedback_type = st.selectbox(
+            "Select an option", [x.name for x in all_feedback_types]
+        )
 
         confirm = st.form_submit_button("submit")
         if confirm:
@@ -28,7 +30,9 @@ def feedback(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
             else:
                 user_id = None
 
-            feedback_type = next(x.id for x in all_feedback_types if x.name == feedback_type)
+            feedback_type = next(
+                x.id for x in all_feedback_types if x.name == feedback_type
+            )
             fp = Feedback_post(
                 id=1,
                 type_id=feedback_type,

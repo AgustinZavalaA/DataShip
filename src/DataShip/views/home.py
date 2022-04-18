@@ -19,7 +19,8 @@ def home(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
     # show relevant info to newcomers
     st.subheader("Home")
     st.write(
-        "Datatship is an easy to use, open source, and free data analysis platform. It is a web application that allows users to upload data files, and then perform data analysis on them."
+        "Datatship is an easy to use, open source, and free data analysis platform. It is a web application"
+        + "that allows users to upload data files, and then perform data analysis on them."
     )
     st.write("Performing the following analysis:")
     st.write("- **Data Visualization (Multiple charts types and modes)**")
@@ -82,7 +83,8 @@ def home(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
             theme="material",
         )
 
-        active_modules = modules.get_active_modules()
+        if data:
+            active_modules = modules.get_active_modules()
 
         # show the data analysis options in the sidebar
         with st.sidebar:

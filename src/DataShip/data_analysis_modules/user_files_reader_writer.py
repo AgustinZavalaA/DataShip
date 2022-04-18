@@ -17,7 +17,7 @@ def read_file(file_path, file_type: str, relative: bool) -> Optional[pd.DataFram
     Returns:
         Optional[pd.DataFrame]: dataframe of the file.
     """
-    
+
     if relative:
         file_path = DEFAULT_SAVE_PATH + file_path
 
@@ -32,7 +32,7 @@ def read_file(file_path, file_type: str, relative: bool) -> Optional[pd.DataFram
     return None
 
 
-def delete_file_from_server(file_path: str, file_type: str, relative: bool) -> None:
+def delete_file_from_server(file_path, file_type: str, relative: bool) -> None:
     """This function deletes a file from the server.
 
     Args:
@@ -40,14 +40,16 @@ def delete_file_from_server(file_path: str, file_type: str, relative: bool) -> N
         file_type (str): extension of the file to delete.
         relative (bool): if the file is in the server or in the user system.
     """
-    
+
     if relative:
         file_path = DEFAULT_SAVE_PATH + file_path
 
     os.remove(file_path)
 
 
-def save_file_in_server(file_path: str, file_type: str, file_name: str) -> Optional[pd.DataFrame]:
+def save_file_in_server(
+    file_path, file_type: str, file_name: str
+) -> Optional[pd.DataFrame]:
     """This function saves a file in the server.
 
     Args:
@@ -58,7 +60,7 @@ def save_file_in_server(file_path: str, file_type: str, file_name: str) -> Optio
     Returns:
         Optional[pd.DataFrame]: dataframe of the file.
     """
-    
+
     df = read_file(file_path, file_type, False)
 
     if df is None:

@@ -1,5 +1,14 @@
 from DataShip.db_management.db_manager import DB_manager
-from DataShip.views import signup, login, feed_post_admin, feedback_form, modules_store, settings, my_files, home
+from DataShip.views import (
+    signup,
+    login,
+    feed_post_admin,
+    feedback_form,
+    modules_store,
+    settings,
+    my_files,
+    home,
+)
 import streamlit as st
 from streamlit_option_menu import option_menu
 import random
@@ -17,9 +26,8 @@ DB_CONN = DB_MAN.get_connection()
 
 class DataShip:
     def __init__(self) -> None:
-        """This contructor creates the layout and loads the views in memory so the user can use them.
-        """
-        
+        """This contructor creates the layout and loads the views in memory so the user can use them."""
+
         st.title("DataShip")
 
         # load the views an unlogged user should see in memory
@@ -36,7 +44,7 @@ class DataShip:
         if "current_file" not in st.session_state.keys():
             st.session_state["current_file"] = None
 
-        # if the user is not logged in load the login and signup page 
+        # if the user is not logged in load the login and signup page
         if st.session_state["user"] is None:
             self.apps["Login"] = (login.login, "bi-person")
             self.apps["Signup"] = (signup.signup, "bi-person-plus")
@@ -58,9 +66,8 @@ class DataShip:
         st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
     def serve(self):
-        """This function serves the app.
-        """
-        
+        """This function serves the app."""
+
         # loads the layout, the sidebar and welcomes if the user is logged in
         with st.sidebar:
             if st.session_state["user"] is not None:
@@ -80,8 +87,7 @@ class DataShip:
 
 
 def main():
-    """entry point for the app 
-    """
+    """entry point for the app"""
     # creation of the dataship app
     page = DataShip()
     # load the layout

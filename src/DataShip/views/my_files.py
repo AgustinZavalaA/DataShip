@@ -13,7 +13,7 @@ def files(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
         DB_MAN (DB_manager): database manager.
         DB_CONN (Connection): database connection.
     """
-    
+
     st.subheader("Upload a new file")
     # let the user upload multiple files to store in the server
     new_files = st.file_uploader("", type=["csv", "txt", "json", "xlsx"], accept_multiple_files=True)

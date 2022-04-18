@@ -10,7 +10,7 @@ def modules(DB_MAN: DB_manager, DB_CONN: Connection) -> None:
         DB_MAN (DB_manager): database manager.
         DB_CONN (Connection): database connection.
     """
-    
+
     # Shows the user the current user modules
     user_modules = []
     if st.session_state["user"] is None:
