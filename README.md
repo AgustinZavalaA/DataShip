@@ -71,14 +71,14 @@ The next tables show in more details the flow of the data in the colored boxes.
 ###  <span style="color:purple">Modules</span>
 | Module name        | Module description | Input | Output method |
 | ------------------ | ------------------ | ----- | ------------- |
-| Mean               | ---                | ---   | ---           |
-| Median             | ---                | ---   | ---           |
-| Mode               | ---                | ---   | ---           |
-| Standard Deviation | ---                | ---   | ---           |
-| Variance           | ---                | ---   | ---           |
-| Linear Regression  | ---                | ---   | ---           |
-| Clusterization     | ---                | ---   | ---           |
-| Graphing           | ---                | ---   | ---           |
+| Mean               | The mean is the average of a data set.                | 1 or more numeric values   | Sum of Observation ÷ Total numbers of Observations          |
+| Median             | The mode is the most common number in a data set                | 1 or more numeric values   | sort the values and return the value in the index {Total numbers of Observations//2}        |
+| Mode               | The median is the middle of the set of numbers.                | 1 or more numeric values   | return the most repeated value in the sequence           |
+| Standard Deviation | The standard deviation is a statistic that measures the dispersion of a dataset relative to its mean                | 1 or more numeric values   | the square root of the sum of squared differences from the mean divided by the size of the data set           |
+| Variance           | variance is the expectation of the squared deviation of a random variable from its population mean or sample mean.                | 1 or more numeric values   | take the standard deviation and multiply by itself           |
+| Linear Regression  | a linear model is a model that assumes a linear relationship between the input variables (x) and the single output variable (y).                | 2 or 3 columns, one representing a class value and the other must be numeric columns  | Y= a + bX           |
+| Clusterization     | k-means clustering is a method of vector quantization, originally from signal processing, that aims to partition n observations into k clusters  | 2 or 3 columns, one representing a class value and the other must be numeric columns |  Compute the sum of the squared distance between data points and all centroids           |
+| Graphing           | A diagram showing the relationship of quantities |  2 or 3 columns, one representing a class value and the other must be numeric columns |  Depending on the selected graph type it could be different           |
 
 
 
